@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4" style="border-bottom: 1px dotted #000000; margin-bottom: 10px">
+      <h3>Notes</h3>
+    </div>
+    <div class="col-lg-8 text-right" style="border-bottom: 1px dotted #000000; margin-bottom: 10px">
+        <button type="button" class="btn btn-outline-danger" (click)="logout()">Logout</button>
+    </div>
+    <div class="col-lg-4 list">
+      <ul class="list-group">
+        <ng-container *ngIf="notesData.length; else elesNoData"></ng-container>
+        <li *ngFor="let item of notesData; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+          <h3>{{item?.title | titlecase}} <br><i class="description">{{item?.description}}</i></h3>
+          <a href="javascript:void(0)" class="badge badge-secondary badge-pill" (click)="removeNotes(i)">x</a>
+        </li>
+        <ng-template #elesNoData>
+          <li  class="list-group-item d-flex justify-content-between align-items-center">
+            No Data
+          </li>
+        </ng-template>
+      </ul>
+
+    </div>
+    <div class="col-lg-8">
+        <form class="loginform" [formGroup]="addNotesForm">
+            <div *ngIf="errorMsg && !addNotesForm.valid" class="alert alert-danger" role="alert">
+                Please Fill Mandatory Details
+              </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Title: <span class="text-danger">*</span></label>
+            <input type="text" formControlName="title" class="form-control" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Body: <span class="text-danger">*</span></label>
+            <textarea formControlName="description" class="form-control" id="" cols="30" rows="10"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary float-right" (click)="addNotes()">Save</button>
+        </form>
+    </div>
+  </div>
+</div>
